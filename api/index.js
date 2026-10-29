@@ -59,12 +59,13 @@ export default async function handler(req, res) {
   } catch (error) {
     console.error('[error] Serverless handler error:', error.message);
     const isEnvError = error.code === 'ENV_INVALID';
+    const detailMsg = isEnvError
+      ? `${error.message.replace(/^Invalid environment configuration:\s*/, '').replace(/\n/g, ' ')}. (If you just saved variables in Vercel Settings, you must Redeploy under Deployments for them to take effect).`
+      : 'SpaceGuard service is temporarily unavailable. Check your MongoDB connection.';
     return res.status(503).json({
       error: {
         code: isEnvError ? 'ENV_CONFIGURATION_MISSING' : 'DATABASE_UNAVAILABLE',
-        message: isEnvError
-          ? 'Missing required environment configuration (MONGODB_URI or JWT_SECRET) in Vercel settings.'
-          : 'SpaceGuard service is temporarily unavailable. Check your MongoDB connection.',
+        message: detailMsg,
       },
     });
   }
