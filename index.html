@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" data-theme="space-dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a111c" />
+    <meta
+      name="description"
+      content="Explore satellite missions and understand simulated telemetry with SpaceGuard. Mission intelligence, simplified."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>SpaceGuard — Mission intelligence, simplified.</title>
+    <script>
+      // Apply the saved theme before paint; blocked storage must not stop startup.
+      try {
+        const theme = JSON.parse(localStorage.getItem('spaceguard:theme'));
+        if (theme === 'light' || theme === 'dark') {
+          document.documentElement.dataset.theme = 'space-' + theme;
+        }
+      } catch {
+        /* The default theme remains usable. */
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript
+      >SpaceGuard needs JavaScript enabled to search missions and view its simulated telemetry.</noscript
+    >
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
